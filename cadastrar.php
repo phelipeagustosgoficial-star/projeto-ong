@@ -25,7 +25,7 @@ if (!isset($_SESSION['logado'])) {
         <ul class="sidebar-menu">
             <li><a href="index.php">📊 Visão Geral</a></li>
             <li><a href="cadastrar.php" class="active">➕ Cadastrar Pet</a></li>
-            <li><a href="#">✏️ Editar Pets</a></li>
+            <li><a href="editar.php">✏️ Editar Pets</a></li>
             <li><a href="#">🦴 Gerenciar Estoque</a></li>
             <li><a href="#">🤝 Parcerias</a></li>
             <li><a href="#" class="logout">🚪 Sair do Painel</a></li>
