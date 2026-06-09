@@ -1,0 +1,126 @@
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS PARA AS AÇÕES E BOTÕES DE EDIÇÃO (editar-lista.css)
+   ========================================================================== */
+
+/* Container da mini-foto do pet na tabela */
+.pet-thumb-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a1a21;
+    border: 1px solid #222227;
+}
+
+.pet-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Centralização vertical dos itens na linha da tabela */
+.custom-table tbody tr td {
+    vertical-align: middle;
+}
+
+/* Alinhamento dos botões lado a lado */
+.actions-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Estilo base unificado para todos os botões da tabela */
+.btn-action-table {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+/* Botão Editar */
+.btn-edit {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+.btn-edit:hover {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+/* Botão Desativar */
+.btn-deactivate {
+    background-color: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+.btn-deactivate:hover {
+    background-color: #ffc107;
+    color: #111115;
+}
+
+/* Botão Ativar */
+.btn-activate {
+    background-color: rgba(33, 150, 243, 0.1);
+    border: 1px solid rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+}
+.btn-activate:hover {
+    background-color: #2196f3;
+    color: #ffffff;
+}
+
+/* Botão Deletar */
+.btn-delete {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+.btn-delete:hover {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+/* BADGES DE STATUS */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-ativo {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+.badge-inativo {
+    background-color: rgba(113, 113, 122, 0.1);
+    color: #71717a;
+}
+
+/* Estilo visual opcional para deixar a linha do pet inativo mais discreta */
+.row-inactive td {
+    opacity: 0.6;
+}
+
+/* CAIXAS DE ALERTAS DE FEEDBACK */
+.alert-box {
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+.alert-box.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+.alert-box.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}

@@ -1,243 +1,416 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* ==========================================================================
+   ESTILOS COMPLETOS DO PAINEL ADMINISTRATIVO (DASHBOARD)
+   ========================================================================== */
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background: #0A0A0A;
+    background-color: #0f0f12;
+    color: #f5f5f7;
+    display: flex;
+    min-height: 100vh;
 }
 
-header {
-    color: #FFF;
-    background: #2c8f31;
+/* BARRA LATERAL (SIDEBAR) */
+.sidebar {
+    width: 260px;
+    background-color: #16161a;
+    border-right: 1px solid #222227;
     display: flex;
-    padding: 10px;
-    justify-content: space-between;
-    height: 60px;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
 }
 
-header nav ul {
-    display: flex;
+.sidebar-brand {
+    padding: 25px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4caf50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #222227;
+}
+
+.sidebar-menu {
     list-style: none;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-}
-
-header nav ul a {
-    text-decoration: none;
-    color: #000000;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-h4 {
-    margin: 0;
-    padding: 0;
-    color: #ffee00;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-
-header nav {
-    background: #9fe78d;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    padding: 8px;
-}
-
-/* Título da página */
-main h1 {
-    color: #9fe78d;
-    padding: 20px 40px;
-    font-size: 28px;
-    letter-spacing: 2px;
-}
-
-/* Grid de cards */
-#grid-card {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 0 40px 40px 40px;
-}
-
-/* Card individual */
-.card {
-    background: #1a1a1a;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Imagem do card */
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-/* Área de informações */
-.card .info {
-    padding: 15px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* Nome do animal */
-.card .titulo {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 15px;
-    text-transform: uppercase;
-}
-
-/* Espécie e raça */
-.card .categoria {
-    color: #aaaaaa;
-    font-size: 13px;
-}
-
-/* Idade */
-.card .valor {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* Botão visualizar */
-.card .info a {
+.sidebar-menu a {
+    color: #a0a0aa;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.card .info button {
-    background: #9fe78d;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-weight: bold;
-    font-size: 12px;
-    text-transform: uppercase;
-    cursor: pointer;
-    letter-spacing: 1px;
+.sidebar-menu a:hover, .sidebar-menu a.active {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #4caf50;
+}
+
+.sidebar-menu a.logout {
+    margin-top: auto;
+    color: #ff5252;
+}
+
+.sidebar-menu a.logout:hover {
+    background-color: rgba(255, 82, 82, 0.1);
+    color: #ff5252;
+}
+
+/* CONTEÚDO PRINCIPAL DO PAINEL */
+.main-content {
+    margin-left: 260px; /* Garante que o conteúdo fique perfeitamente ao lado da sidebar */
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+.header-dash {
+    margin-bottom: 35px;
+}
+
+.header-dash h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.header-dash p {
+    color: #71717a;
+    font-size: 0.95rem;
     margin-top: 5px;
 }
 
-.card .info button:hover {
-    background: #2c8f31;
-    color: #ffffff;
-}
-
-
-main h1 {
-    color: #9fe78d;
-    padding: 20px 40px;
-    font-size: 28px;
-    letter-spacing: 2px;
-}
-
-
-form {
-    padding: 0 40px 40px 40px;
-}
-
-
-#grid {
+/* CARDS DE MÉTRICAS OPERACIONAIS */
+.metrics-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
 }
 
-
-#grid div {
+.metric-card {
+    background-color: #16161a;
+    border: 1px solid #222227;
+    padding: 25px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
+.metric-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: #4caf50;
+}
 
-#grid label {
-    color: #aaaaaa;
-    font-size: 13px;
-    font-weight: bold;
+.metric-card.alert::before { background-color: #ff5252; }
+.metric-card.info::before { background-color: #2196f3; }
+
+.metric-title {
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    color: #71717a;
+    font-weight: 600;
 }
 
-
-#grid input,
-#grid select,
-#grid textarea {
-    background: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    padding: 10px;
-    color: #ffffff;
-    font-size: 14px;
-    outline: none;
-}
-
-
-#grid input:focus,
-#grid select:focus,
-#grid textarea:focus {
-    border-color: #9fe78d;
-}
-
-
-#grid textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-
-#grid select option {
-    background: #1a1a1a;
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
     color: #ffffff;
 }
 
+/* BLOCOS DE TABELAS */
+.section-card {
+    background-color: #16161a;
+    border: 1px solid #222227;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
 
-.btn-cadastrar {
+.section-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-table {
     width: 100%;
-    padding: 14px;
-    background: #9fe78d;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.custom-table th {
+    padding: 14px 16px;
+    color: #71717a;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 1px solid #222227;
+    background-color: #1a1a21;
+}
+
+.custom-table td {
+    padding: 16px;
+    font-size: 0.95rem;
+    color: #e4e4e7;
+    border-bottom: 1px solid #222227;
+}
+
+.custom-table tr:hover td {
+    background-color: #1a1a21;
+}
+
+/* STATUS CAPSULAS (BADGES) */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge.ok {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+
+.badge.atencao {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ff9800;
+}
+
+.badge.critico {
+    background-color: rgba(255, 82, 82, 0.1);
+    color: #ff5252;
+}
+
+/* BOTÕES DE INTERAÇÃO */
+.btn-action {
+    background-color: #4caf50;
+    color: white;
     border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
 }
 
-.btn-cadastrar:hover {
-    background: #2c8f31;
+.btn-action:hover {
+    background-color: #43a047;
+}
+
+/* ===================================
+   CARD PRINCIPAL
+=================================== */
+
+.form-edit-container {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 18px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.form-edit-container h2 {
     color: #ffffff;
+    margin-bottom: 25px;
+    font-size: 1.4rem;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 15px;
 }
 
-footer {
-    text-align: center;
-    color: #aaaaaa;
-    font-size: 13px;
-    padding: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    margin-top: 40px;
+/* ===================================
+   FORMULÁRIO
+=================================== */
+
+.edit-table-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
 }
 
-.card img {
-    width: 100%;
-    height: 250px;
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-cell {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   LABELS
+=================================== */
+
+.form-cell label {
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* ===================================
+   INPUTS
+=================================== */
+
+.form-cell input[type="text"],
+.form-cell input[type="number"],
+.form-cell input[type="file"] {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    transition: .3s;
+    font-size: 15px;
+}
+
+.form-cell input:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.15);
+}
+
+.form-cell input::placeholder {
+    color: #64748b;
+}
+
+/* ===================================
+   FOTO
+=================================== */
+
+.image-section {
+    align-items: center;
+}
+
+.preview-container {
+    margin-top: 10px;
+}
+
+.current-preview {
+    width: 220px;
+    height: 220px;
     object-fit: cover;
-    object-position: top;
+    border-radius: 16px;
+    border: 3px solid #22c55e;
+    box-shadow: 0 10px 25px rgba(0,0,0,.4);
+}
+
+.help-text {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* ===================================
+   BOTÕES
+=================================== */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-cancel,
+.btn-save {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .3s;
+}
+
+/* Botão cancelar */
+
+.btn-cancel {
+    background: rgba(239,68,68,.15);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,.3);
+}
+
+.btn-cancel:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* Botão salvar */
+
+.btn-save {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-save:hover {
+    background: #16a34a;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   RESPONSIVO
+=================================== */
+
+@media (max-width: 768px) {
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-save,
+    .btn-cancel {
+        width: 100%;
+        text-align: center;
+    }
+
+    .current-preview {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+    }
 }

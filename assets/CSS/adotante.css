@@ -1,0 +1,177 @@
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS DO PAINEL DO ADOTANTE (adotante.css)
+   ========================================================================== */
+
+body {
+    background-color: #0f0f12;
+    color: #f5f5f7;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Barra de navegação superior para o cliente */
+.navbar-adotante {
+    background-color: #16161a;
+    border-bottom: 1px solid #222227;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #4caf50;
+    text-decoration: none;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar-user span {
+    color: #a0a0aa;
+    font-size: 0.95rem;
+}
+
+.navbar-user strong {
+    color: #ffffff;
+}
+
+.btn-logout {
+    background-color: rgba(255, 82, 82, 0.1);
+    border: 1px solid rgba(255, 82, 82, 0.2);
+    color: #ff5252;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background-color: #ff5252;
+    color: #ffffff;
+}
+
+/* Container do Conteúdo */
+.container-adotante {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.welcome-section {
+    margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+    font-size: 2.2rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.welcome-section p {
+    color: #71717a;
+    font-size: 1.05rem;
+    margin-top: 8px;
+}
+
+/* GRID DE CARDS DOS PETS */
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.pet-card {
+    background-color: #16161a;
+    border: 1px solid #222227;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+    border-color: #4caf50;
+}
+
+.pet-img-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background-color: #1a1a21;
+}
+
+.pet-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pet-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.pet-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.pet-details {
+    font-size: 0.9rem;
+    color: #71717a;
+    margin-bottom: 15px;
+}
+
+.pet-age {
+    font-size: 0.95rem;
+    color: #4caf50;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: auto;
+}
+
+.btn-adopt {
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.btn-adopt:hover {
+    background-color: #43a047;
+}
+
+.no-pets {
+    grid-column: span 3;
+    text-align: center;
+    padding: 40px;
+    color: #71717a;
+    background-color: #16161a;
+    border: 1px dashed #222227;
+    border-radius: 12px;
+}

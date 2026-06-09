@@ -1,57 +1,123 @@
 <?php
-// include do arquivo de conexao
-require_once 'backend/conexao.php';
-
-try {
-    $sql = "SELECT * FROM tb_animais";
-    $comando = $conexao->prepare($sql);
-    $comando->execute();
-    //armazena os dados do select em um array para que seja exibido na tabela
-    $animais = $comando->fetchAll(PDO::FETCH_ASSOC);
-
-    //    echo "<pre>";
-    //    var_dump($produtos);
-
-} catch (PDOException $erro) {
-    // guarda o erro gerado no log do servidor
-    error_log($erro->getMessage());
-    // exibe a mensagem de erro
-    echo "Não foi possível buscar os dados";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 
-?>
+// 1. Conexão com o banco de dados
+require_once 'backend/conexao.php';
 
+try {
+    // Busca contagem total de animais
+    $sql_animais = "SELECT COUNT(*) as total FROM tb_animais";
+    $stmt = $conexao->prepare($sql_animais);
+    $stmt->execute();
+    $total_animais = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    // Busca contagem de itens críticos no estoque
+    $sql_criticos = "SELECT COUNT(*) as total FROM tb_estoque WHERE status_necessidade = 'Crítico'";
+    $stmt = $conexao->prepare($sql_criticos);
+    $stmt->execute();
+    $itens_criticos = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    // Busca todos os itens do estoque
+    $sql_estoque = "SELECT * FROM tb_estoque ORDER BY status_necessidade DESC";
+    $stmt = $conexao->prepare($sql_estoque);
+    $stmt->execute();
+    $itens_estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $erro) {
+    error_log($erro->getMessage());
+    echo "Erro ao carregar o painel administrativo.";
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROJETO CUIDA ANIMAL</title>
+    <title>Painel Administrativo - CUIDA ANIMAL</title>
     <link rel="stylesheet" href="assets/CSS/styale.css">
 </head>
 <body>
-    <?php 
-        // include do header(menu)
-        require_once 'includes/header.php';
-    ?>    
-    <main>
-    <h1>Animais Para Adoção</h1>
-    <div id="grid-card">
-        <?php foreach ($animais as $animal): ?>
-            <div class="card">
-                <img src="assets/img/imagens-ong/<?php echo $animal['imagem']; ?>" alt="">
-                <div class="info">
-                    <div class="titulo"><?php echo $animal['nome']; ?></div>
-                    <div class="categoria"><?php echo $animal['especie']; ?> — <?php echo $animal['raca']; ?></div>
-                    <div class="valor"><?php echo $animal['idade']; ?> anos</div>
-                    <a href="animal-info.php?id=<?php echo $animal['id']; ?>">
-                        <button type="button">Visualizar</button>
-                    </a>
-                </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">🐾 Cuida Animal</div>
+        <ul class="sidebar-menu">
+            <li><a href="index.php" class="active">📊 Visão Geral</a></li>
+            <li><a href="cadastrar.php">➕ Cadastrar Pet</a></li>
+            <li><a href="editar.php">✏️ Editar Pets</a></li>
+            <li><a href="#">🦴 Gerenciar Estoque</a></li>
+            <li><a href="#">🤝 Parcerias</a></li>
+            <li><a href="sair.php" class="logout">🚪 Sair do Painel</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-dash">
+            <h1>Painel de Administração</h1>
+            <p>Bem-vindo de volta! Aqui está o resumo operacional da sua ONG hoje.</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-title">Animais Hospedados</span>
+                <span class="metric-value"><?php echo $total_animais; ?></span>
             </div>
-        <?php endforeach; ?>
-    </div>
-</main>
+            <div class="metric-card alert">
+                <span class="metric-title">Itens Críticos</span>
+                <span class="metric-value"><?php echo $itens_criticos; ?></span>
+            </div>
+            <div class="metric-card info">
+                <span class="metric-title">Parcerias Ativas</span>
+                <span class="metric-value">4</span>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>
+                <span>📋 Controle de Insumos e Necessidades</span>
+                <a href="#" class="btn-action">+ Atualizar Estoque</a>
+            </h2>
+            
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Item de Consumo</th>
+                        <th>Categoria</th>
+                        <th>Qtd. Atual</th>
+                        <th>Status de Urgência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (count($itens_estoque) > 0): ?>
+                        <?php foreach ($itens_estoque as $item): ?>
+                            <tr>
+                                <td><strong><?php echo $item['item_nome']; ?></strong></td>
+                                <td><?php echo $item['categoria']; ?></td>
+                                <td><?php echo $item['quantidade']; ?> un</td>
+                                <td>
+                                    <?php 
+                                        $classe_status = 'ok';
+                                        if ($item['status_necessidade'] == 'Atenção') $classe_status = 'atencao';
+                                        if ($item['status_necessidade'] == 'Crítico') $classe_status = 'critico';
+                                    ?>
+                                    <span class="badge <?php echo $classe_status; ?>">
+                                        ● <?php echo $item['status_necessidade']; ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #71717a;">Nenhum item adicionado ao estoque.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
 </body>
 </html>
