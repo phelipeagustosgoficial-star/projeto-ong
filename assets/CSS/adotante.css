@@ -1,119 +1,205 @@
 /* ==========================================================================
-   ESTILOS EXCLUSIVOS DO PAINEL DO ADOTANTE (adotante.css)
+   ESTILOS PAINEL DO ADOTANTE E INTERFACE PÚBLICA (adotante.css)
    ========================================================================== */
 
-body {
-    background-color: #0f0f12;
-    color: #f5f5f7;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:root {
+    --bg-puro: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-nav: #ffffff;
+    --texto-master: #18181b;
+    --texto-suave: #71717a;
+    --borda-suave: #e4e4e7;
+    --primary: #22c55e;
+    --primary-hover: #16a34a;
+    --input-bg: #ffffff;
 }
 
-/* Barra de navegação superior para o cliente */
-.navbar-adotante {
-    background-color: #16161a;
-    border-bottom: 1px solid #222227;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+body.dark-theme {
+    --bg-puro: #09090b;
+    --bg-card: #141416;
+    --bg-nav: #141416;
+    --texto-master: #f4f4f5;
+    --texto-suave: #a0a0aa;
+    --borda-suave: #222227;
+    --input-bg: #1c1c1f;
+}
+
+body {
+    background-color: var(--bg-puro);
+    color: var(--texto-master);
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header Superior Estilo E-commerce */
+.navbar-publica {
+    background-color: var(--bg-nav);
+    border-bottom: 1px solid var(--borda-suave);
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.navbar-brand {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #4caf50;
-    text-decoration: none;
-}
-
-.navbar-user {
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
 }
 
-.navbar-user span {
-    color: #a0a0aa;
-    font-size: 0.95rem;
+.nav-logo {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-decoration: none;
 }
 
-.navbar-user strong {
-    color: #ffffff;
+.nav-links {
+    display: flex;
+    gap: 25px;
 }
 
-.btn-logout {
-    background-color: rgba(255, 82, 82, 0.1);
-    border: 1px solid rgba(255, 82, 82, 0.2);
-    color: #ff5252;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.9rem;
+.nav-item {
+    color: var(--texto-suave);
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 4px;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
 }
 
-.btn-logout:hover {
-    background-color: #ff5252;
+.nav-item:hover, .nav-item.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Toggle do Tema */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    transition: background-color 0.2s;
+}
+.theme-toggle-btn:hover {
+    background-color: rgba(128,128,128,0.15);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+.logout-link {
+    color: #ff5252;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: rgba(255,82,82,0.1);
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.logout-link:hover {
+    background: #ff5252;
+    color: #fff;
+}
+
+/* Área de Busca e Filtros */
+.search-filter-section {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--borda-suave);
+    padding: 25px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.search-input {
+    flex: 1;
+    background-color: var(--input-bg);
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-master);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.search-input:focus {
+    border-color: var(--primary);
+}
+
+.filter-btn {
+    background-color: var(--input-bg);
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-master);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
     color: #ffffff;
 }
 
-/* Container do Conteúdo */
-.container-adotante {
+/* Grid Principal */
+.main-wrapper {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.welcome-section {
-    margin-bottom: 40px;
-}
-
-.welcome-section h1 {
-    font-size: 2.2rem;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-.welcome-section p {
-    color: #71717a;
-    font-size: 1.05rem;
-    margin-top: 8px;
-}
-
-/* GRID DE CARDS DOS PETS */
 .pets-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
+    gap: 30px;
 }
 
 .pet-card {
-    background-color: #16161a;
-    border: 1px solid #222227;
-    border-radius: 12px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda-suave);
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.2s ease, border-color 0.2s ease;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
-
 .pet-card:hover {
     transform: translateY(-5px);
-    border-color: #4caf50;
+    border-color: var(--primary);
 }
 
 .pet-img-container {
     width: 100%;
-    height: 220px;
-    overflow: hidden;
-    background-color: #1a1a21;
+    height: 240px;
 }
-
 .pet-img {
     width: 100%;
     height: 100%;
@@ -128,50 +214,361 @@ body {
 }
 
 .pet-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 5px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--texto-master);
+    margin: 0 0 6px 0;
 }
 
 .pet-details {
     font-size: 0.9rem;
-    color: #71717a;
-    margin-bottom: 15px;
+    color: var(--texto-suave);
+    margin: 0 0 15px 0;
 }
 
 .pet-age {
-    font-size: 0.95rem;
-    color: #4caf50;
+    font-size: 0.9rem;
+    color: var(--primary);
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: auto;
 }
 
 .btn-adopt {
-    background-color: #4caf50;
+    background-color: var(--primary);
     color: #ffffff;
     border: none;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 0.95rem;
     font-weight: 600;
-    cursor: pointer;
     text-align: center;
     text-decoration: none;
-    transition: background 0.2s ease;
+    transition: background 0.2s;
 }
-
 .btn-adopt:hover {
-    background-color: #43a047;
+    background-color: var(--primary-hover);
 }
 
 .no-pets {
-    grid-column: span 3;
+    grid-column: 1 / -1;
     text-align: center;
-    padding: 40px;
-    color: #71717a;
-    background-color: #16161a;
-    border: 1px dashed #222227;
+    padding: 60px 20px;
+    color: var(--texto-suave);
+    background-color: var(--bg-card);
+    border: 1px dashed var(--borda-suave);
+    border-radius: 16px;
+}
+/* ==========================================================================
+   ESTILOS COMPLEMENTARES DA PÁGINA DE DETALHES (ANIMAL-INFO)
+   ========================================================================== */
+
+.info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda-suave);
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+@media (max-width: 768px) {
+    .info-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-img-box {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
     border-radius: 12px;
+    overflow: hidden;
+}
+
+.info-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-content-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-header-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.pet-header-details h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.badge-especie {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: var(--primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.pet-specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.pet-specs-table td {
+    padding: 8px 0;
+    font-size: 1rem;
+}
+
+.divisor-linha {
+    border: 0;
+    border-top: 1px solid var(--borda-suave);
+    margin: 10px 0 25px 0;
+}
+
+/* Formulário Interno */
+.form-adocao h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.3rem;
+}
+
+.input-group-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.input-group-form label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--texto-master);
+}
+
+.input-group-form input, 
+.input-group-form textarea {
+    background-color: var(--input-bg);
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-master);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group-form input:focus, 
+.input-group-form textarea:focus {
+    border-color: var(--primary);
+}
+
+.btn-submit-adocao {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.btn-submit-adocao:hover {
+    background-color: var(--primary-hover);
+}
+/* ==========================================================================
+   COMPONENTE DE NOTIFICAÇÃO DO USUÁRIO (Sininho)
+   ========================================================================== */
+
+.notification-badge {
+    position: relative;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-notification 2s infinite;
+}
+
+.badge-number {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ef4444; /* Vermelho vibrante */
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    min-width: 10px;
+    text-align: center;
+    border: 1px solid var(--bg-nav);
+}
+
+/* Animação para o sininho pulsar levemente se houver novidades */
+@keyframes pulse-notification {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   SISTEMA DE NOTIFICAÇÕES DROPDOWN (ABINHA DO SININHO)
+   ========================================================================== */
+
+.notification-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.notification-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.badge-number {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+    border: 2px solid var(--bg-nav);
+}
+
+/* Caixa flutuante oculta por padrão */
+.notification-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 320px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda-suave);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeInDropdown 0.2s ease-out;
+}
+
+/* Classe que o JS ativa para mostrar a abinha */
+.notification-dropdown.active {
+    display: block;
+}
+
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-header {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--borda-suave);
+    color: var(--texto-master);
+}
+
+.dropdown-body {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--borda-suave);
+    align-items: flex-start;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.empty-notification {
+    padding: 20px;
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+}
+
+.status-icon {
+    font-size: 1.1rem;
+    margin-top: 2px;
+}
+
+.status-text {
+    font-size: 0.88rem;
+    color: var(--texto-master);
+    line-height: 1.4;
+}
+
+/* Destaques de cores para os status */
+.txt-aprovado {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.txt-recusado {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.dropdown-footer {
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid var(--borda-suave);
+}
+
+.dropdown-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.dropdown-footer a:hover {
+    text-decoration: underline;
 }

@@ -18,11 +18,20 @@ body {
 
 /* Garante o alinhamento correto do conteúdo ao lado da barra lateral */
 .main-content {
-    margin-left: 260px;
+    margin-left: 260px; /* Mantém o recuo para não sobrepor a sidebar */
     flex: 1;
     padding: 40px;
-    max-width: 1200px;
+    box-sizing: border-box;
     width: calc(100% - 260px);
+}
+
+/* Alinhamento centralizado automático para os blocos da tela de cadastro */
+.header-dash,
+.section-card {
+    width: 100%;
+    max-width: 1200px; /* Mantém o limite confortável para preenchimento */
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .header-dash {

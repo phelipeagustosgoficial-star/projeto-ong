@@ -1,0 +1,81 @@
+-- --------------------------------------------------------
+-- Servidor:                     127.0.0.1
+-- Versão do servidor:           10.4.32-MariaDB - mariadb.org binary distribution
+-- OS do Servidor:               Win64
+-- HeidiSQL Versão:              12.14.0.7165
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Copiando estrutura do banco de dados para db_ong_animais
+CREATE DATABASE IF NOT EXISTS `db_ong_animais` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_estonian_ci */;
+USE `db_ong_animais`;
+
+-- Copiando estrutura para tabela db_ong_animais.tb_animais
+CREATE TABLE IF NOT EXISTS `tb_animais` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `especie` varchar(50) NOT NULL,
+  `raca` varchar(50) NOT NULL,
+  `idade` int(11) NOT NULL DEFAULT 0,
+  `cor` varchar(30) NOT NULL,
+  `sexo` enum('Macho','Fêmea') NOT NULL,
+  `descricao` text NOT NULL,
+  `status` bit(1) NOT NULL DEFAULT b'1',
+  `data` datetime NOT NULL DEFAULT current_timestamp(),
+  `imagem` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+-- Copiando dados para a tabela db_ong_animais.tb_animais: ~2 rows (aproximadamente)
+INSERT INTO `tb_animais` (`id`, `nome`, `especie`, `raca`, `idade`, `cor`, `sexo`, `descricao`, `status`, `data`, `imagem`) VALUES
+	(1, 'Max', 'Cachorro', 'Pastor Alemão Capa Preta', 2, 'Preto E meio Amarelado', 'Macho', 'Esse é o max um dos Nosso Filhotes mais brincalhão Que Tem aqui. Ele ama agua, e tambem é um otimo nadador. Ele Foi abandonado pelo antigo dono, Ele Precisa de Um lar pois atualmente esta triste. PF adotem ele.', b'1', '2026-04-30 14:34:23', 'Pator Alemão Capa Preta Filhote.jpg'),
+	(3, 'Fifi', 'Cachorro', 'Cockapoo', 17, 'Cinza e Preta', 'Fêmea', 'Cão da raça Cockapoo (mistura de Cocker Spaniel com Poodle). É extremamente dócil, inteligente, brincalhão e de porte médio, ideal tanto para casas quanto para apartamentos. Possui uma pelagem linda e costuma se dar muito bem com crianças e outros animais. Está saudável, vacinado e cheio de energia esperando por um lar amoroso!', b'1', '2026-06-09 15:06:39', '10-poodle-de-pelo-cinza.jpg');
+
+-- Copiando estrutura para tabela db_ong_animais.tb_estoque
+CREATE TABLE IF NOT EXISTS `tb_estoque` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_nome` varchar(100) NOT NULL,
+  `categoria` varchar(50) NOT NULL,
+  `quantidade` int(11) NOT NULL DEFAULT 0,
+  `status_necessidade` enum('OK','Atenção','Crítico') DEFAULT 'OK',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+-- Copiando dados para a tabela db_ong_animais.tb_estoque: ~3 rows (aproximadamente)
+INSERT INTO `tb_estoque` (`id`, `item_nome`, `categoria`, `quantidade`, `status_necessidade`) VALUES
+	(1, 'Ração Cão Adulto', 'Ração', 2, 'Crítico'),
+	(2, 'Bolinhas de Borracha', 'Brinquedo', 15, 'OK'),
+	(3, 'Ração Filhote', 'Ração', 5, 'Atenção');
+
+-- Copiando estrutura para tabela db_ong_animais.tb_usuarios
+CREATE TABLE IF NOT EXISTS `tb_usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `nivel_acesso` enum('user','admin') DEFAULT 'user',
+  `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+-- Copiando dados para a tabela db_ong_animais.tb_usuarios: ~2 rows (aproximadamente)
+INSERT INTO `tb_usuarios` (`id`, `nome`, `email`, `senha`, `nivel_acesso`, `data_cadastro`) VALUES
+	(1, 'Admin ONG', 'admin@ong.com', 'admin123', 'admin', '2026-06-09 17:45:01'),
+	(2, 'Adotante Comum', 'usuario@email.com', 'user123', 'user', '2026-06-09 17:45:01'),
+	(3, 'Leo silva', 'leosilva2020@gmail.com', 'Leoleo', 'user', '2026-06-09 18:54:00');
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

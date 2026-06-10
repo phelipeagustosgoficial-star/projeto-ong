@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    ESTILOS COMPLETOS DO PAINEL ADMINISTRATIVO (DASHBOARD)
    ========================================================================== */
@@ -74,12 +75,25 @@ body {
     color: #ff5252;
 }
 
-/* CONTEÚDO PRINCIPAL DO PAINEL */
+/* CONTEÚDO PRINCIPAL DO PAINEL - CORRIGIDO E CENTRALIZADO */
 .main-content {
-    margin-left: 260px; /* Garante que o conteúdo fique perfeitamente ao lado da sidebar */
+    margin-left: 260px; /* Mantém o recuo para não sobrepor a sidebar */
     flex: 1;
     padding: 40px;
+    box-sizing: border-box;
+    width: calc(100% - 260px);
+}
+
+/* Alinhamento centralizado automático para todos os blocos do painel */
+.header-dash,
+.metrics-grid,
+.section-card,
+.form-edit-container,
+.parcerias-container {
+    width: 100%;
     max-width: 1200px;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .header-dash {
@@ -234,7 +248,7 @@ body {
 }
 
 /* ===================================
-   CARD PRINCIPAL
+    CARD PRINCIPAL
 =================================== */
 
 .form-edit-container {
@@ -255,7 +269,7 @@ body {
 }
 
 /* ===================================
-   FORMULÁRIO
+    FORMULÁRIO
 =================================== */
 
 .edit-table-form {
@@ -278,7 +292,7 @@ body {
 }
 
 /* ===================================
-   LABELS
+    LABELS
 =================================== */
 
 .form-cell label {
@@ -289,7 +303,7 @@ body {
 }
 
 /* ===================================
-   INPUTS
+    INPUTS
 =================================== */
 
 .form-cell input[type="text"],
@@ -315,7 +329,7 @@ body {
 }
 
 /* ===================================
-   FOTO
+    FOTO
 =================================== */
 
 .image-section {
@@ -342,7 +356,7 @@ body {
 }
 
 /* ===================================
-   BOTÕES
+    BOTÕES
 =================================== */
 
 .form-actions {
@@ -389,7 +403,7 @@ body {
 }
 
 /* ===================================
-   RESPONSIVO
+    RESPONSIVO
 =================================== */
 
 @media (max-width: 768px) {
@@ -414,3 +428,5 @@ body {
         height: auto;
     }
 }
+
+

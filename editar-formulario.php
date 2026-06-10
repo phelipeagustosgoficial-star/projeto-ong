@@ -55,8 +55,9 @@ try {
             <li><a href="index.php">📊 Visão Geral</a></li>
             <li><a href="cadastrar.php">➕ Cadastrar Pet</a></li>
             <li><a href="editar.php" class="active">✏️ Editar Pets</a></li>
-            <li><a href="#">🦴 Gerenciar Estoque</a></li>
-            <li><a href="#">🤝 Parcerias</a></li>
+            <li><a href="gerenciar-estoque.php">🦴 Gerenciar Estoque</a></li>
+            <li><a href="parcerias-novo.php">🤝 Parcerias</a></li>
+             <li><a href="registro-pedidos.php">📖 Registro de Pedidos de Adoção</a></li>
             <li><a href="sair.php" class="logout">🚪 Sair do Painel</a></li>
         </ul>
     </aside>

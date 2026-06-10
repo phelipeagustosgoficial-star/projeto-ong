@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 // 1. Conexão com o banco de dados
 require_once 'backend/conexao.php';
 
@@ -19,6 +18,12 @@ try {
     $stmt = $conexao->prepare($sql_criticos);
     $stmt->execute();
     $itens_criticos = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    // CORRIGIDO: Busca contagem real e dinâmica de parcerias ATIVAS direto do banco
+    $sql_parcerias = "SELECT COUNT(*) as total FROM tb_parcerias WHERE status_parceria = 'Ativa'";
+    $stmt = $conexao->prepare($sql_parcerias);
+    $stmt->execute();
+    $parcerias_ativas = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
     // Busca todos os itens do estoque
     $sql_estoque = "SELECT * FROM tb_estoque ORDER BY status_necessidade DESC";
@@ -48,8 +53,9 @@ try {
             <li><a href="index.php" class="active">📊 Visão Geral</a></li>
             <li><a href="cadastrar.php">➕ Cadastrar Pet</a></li>
             <li><a href="editar.php">✏️ Editar Pets</a></li>
-            <li><a href="#">🦴 Gerenciar Estoque</a></li>
-            <li><a href="#">🤝 Parcerias</a></li>
+            <li><a href="gerenciar-estoque.php">🦴 Gerenciar Estoque</a></li>
+            <li><a href="parcerias-novo.php">🤝 Parcerias</a></li>
+            <li><a href="registro-pedidos.php">📖 Registro de Pedidos de Adoção</a></li>
             <li><a href="sair.php" class="logout">🚪 Sair do Painel</a></li>
         </ul>
     </aside>
@@ -71,7 +77,7 @@ try {
             </div>
             <div class="metric-card info">
                 <span class="metric-title">Parcerias Ativas</span>
-                <span class="metric-value">4</span>
+                <span class="metric-value"><?php echo $parcerias_ativas; ?></span>
             </div>
         </div>
 

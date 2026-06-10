@@ -1,0 +1,43 @@
+/* Cores Padrão (Tema Claro - Sol) */
+:root {
+    --bg-principal: #ffffff;
+    --bg-card: #f4f4f5;
+    --texto-principal: #18181b;
+    --texto-secundario: #71717a;
+    --borda: #e4e4e7;
+}
+
+/* Cores quando o Tema Escuro estiver ativo (Tema Escuro - Lua) */
+body.dark-theme {
+    --bg-principal: #09090b;
+    --bg-card: #18181b;
+    --texto-principal: #f4f4f5;
+    --texto-secundario: #a0a0aa;
+    --borda: #27272a;
+}
+
+/* Aplicação das variáveis nos elementos do seu site */
+body {
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    transition: background 0.3s ease, color 0.3s ease; /* Transição suave ao mudar */
+}
+
+.card-pet {
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda);
+}
+
+/* Estilo do Botão de Alternar Tema */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+}

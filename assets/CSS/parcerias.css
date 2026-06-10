@@ -1,0 +1,213 @@
+/* ==========================================================================
+   ESTILOS PREMIUM - GESTÃO DE PARCERIAS CENTRALIZADO (parcerias.css)
+   ========================================================================== */
+
+/* --- FORÇAR CENTRALIZAÇÃO ABSOLUTA NO MEIO DA TELA --- */
+.header-dash,
+.alert-box,
+.alert-success,
+.alert-error,
+.parcerias-container,
+.section-card {
+    width: 100% !important;
+    max-width: 1100px !important; /* Limite perfeito para os blocos não esticarem demais */
+    margin-left: auto !important;  /* Empurra o bloco igualmente da esquerda */
+    margin-right: auto !important; /* Empurra o bloco igualmente da direita */
+    box-sizing: border-box !important;
+}
+
+/* Espaçamento vertical entre os elementos */
+.header-dash {
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+
+.parcerias-container {
+    margin-bottom: 35px !important;
+}
+
+/* Container Envolvedor do Formulário */
+.parcerias-container {
+    background-color: #111115; /* Cinza escuro fosco premium */
+    border: 1px solid #1f1f23;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Título Interno do Bloco */
+.parcerias-container h2 {
+    font-size: 1.3rem;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1f1f23;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* Estrutura de grid para os campos (2 por linha) */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+/* Agrupamento de Label + Campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilização das Labels */
+.form-group label {
+    font-size: 0.9rem;
+    color: #9e9ea7;
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Inputs, Selects e Textarea padronizados */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background-color: #18181c;
+    border: 1px solid #26262b;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+/* Ajuste específico para menus select (seta customizada moderna) */
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239e9ea7' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/\3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center;
+    padding-right: 40px;
+}
+
+/* Caixa de Observações/Textarea ocupando a linha toda */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Efeito de Focus ao clicar nos campos */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #22c55e; /* Acende em verde limão */
+    background-color: #1c1c22;
+}
+
+/* Forçar campos de largura total */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Botão Verde de Sucesso */
+.btn-salvar {
+    background-color: #22c55e;
+    color: #ffffff;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-salvar:hover {
+    background-color: #16a34a;
+    transform: translateY(-1px);
+}
+
+/* --- ESTILIZAÇÃO DOS ALERTAS DE FEEDBACK --- */
+.alert-box, .alert-success, .alert-error {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+.alert-success {
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+/* --- BOTÕES DE AÇÃO DA TABELA --- */
+.btn-status-toggle {
+    background-color: #27272a;
+    color: #e4e4e7;
+    border: 1px solid #3f3f46;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-status-toggle:hover {
+    background-color: #3f3f46;
+    color: #ffffff;
+    border-color: #52525b;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Animação suave para entrada dos alertas */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVIDADE (MOBILE) --- */
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .full-width {
+        grid-column: span 1;
+    }
+    .parcerias-container {
+        padding: 20px;
+    }
+    .btn-salvar {
+        width: 100%;
+        justify-content: center;
+    }
+}
