@@ -15,19 +15,18 @@ $total_nao_lidas = 0;
 
 if (isset($_SESSION['user_nome'])) {
     try {
-        // Busca os pedidos do usuário junto com o nome do pet para a notificação ficar bonita
+        // Busca os pedidos do usuário junto com o nome do pet para a notificação
         $sql_notif = "SELECT p.status_pedido, a.nome AS nome_pet 
                       FROM tb_pedidos_adocao p
                       JOIN tb_animais a ON p.id_animal = a.id
                       WHERE p.nome_adotante = :nome 
-                      ORDER BY p.id DESC LIMIT 5"; // Mostra as 5 últimas movimentações
+                      ORDER BY p.id DESC LIMIT 5";
                       
         $stmt_notif = $conexao->prepare($sql_notif);
         $stmt_notif->bindValue(':nome', $_SESSION['user_nome'], PDO::PARAM_STR);
         $stmt_notif->execute();
         $notificacoes = $stmt_notif->fetchAll(PDO::FETCH_ASSOC);
         
-        // Conta quantas estão finalizadas (Aprovadas ou Recusadas) para colocar o número no sininho
         foreach ($notificacoes as $n) {
             if ($n['status_pedido'] === 'Aprovado' || $n['status_pedido'] === 'Recusado') {
                 $total_nao_lidas++;
@@ -37,16 +36,22 @@ if (isset($_SESSION['user_nome'])) {
         error_log($e->getMessage());
     }
 }
+
+// AUTOMACAÇÃO: Pega o nome do arquivo atual para saber onde colocar a linha verde
+$pagina_atual = basename($_SERVER['PHP_SELF']);
 ?>
 <header class="navbar-publica">
     <div class="nav-container">
         <a href="painel-adotante.php" class="nav-logo">🐾 CUIDA ANIMAL</a>
         
         <nav class="nav-links">
-            <a href="painel-adotante.php" class="nav-item active">🐶 Adotar um Pet</a>
-            <a href="produtos.php" class="nav-item">🧸 Brinquedos & Acessórios</a>
-            <a href="pedidos-usuario.php" class="nav-item">📋 Meus Pedidos</a>
-            <a href="sobre.php" class="nav-item">🏢 Sobre a ONG</a>
+            <a href="painel-adotante.php" class="nav-item <?php echo ($pagina_atual === 'painel-adotante.php') ? 'active' : ''; ?>">🐶 Adotar um Pet</a>
+            
+            <a href="produtos.php" class="nav-item <?php echo ($pagina_atual === 'produtos.php') ? 'active' : ''; ?>">🧸 Brinquedos & Acessórios</a>
+            
+            <a href="meus-pedidos.php" class="nav-item <?php echo ($pagina_atual === 'meus-pedidos.php') ? 'active' : ''; ?>">📋 Meus Pedidos</a>
+            
+            <a href="sobre.php" class="nav-item <?php echo ($pagina_atual === 'sobre.php') ? 'active' : ''; ?>">🏢 Sobre a ONG</a>
         </nav>
 
         <div class="nav-right">
@@ -89,11 +94,11 @@ if (isset($_SESSION['user_nome'])) {
                                             </div>
                                         <?php endif; ?>
                                     </li>
-                                <?php endforeach; ?>
+                                乙<?php endforeach; ?>
                             <?php endif; ?>
                         </ul>
                         <div class="dropdown-footer">
-                            <a href="pedidos-usuario.php">Ver todos os meus pedidos</a>
+                            <a href="meus-pedidos.php">Ver todos os meus pedidos</a>
                         </div>
                     </div>
                 </div>
@@ -110,17 +115,17 @@ if (isset($_SESSION['user_nome'])) {
         const btnSininho = document.getElementById('btn-sininho');
         const dropdownNotif = document.getElementById('dropdown-notif');
 
-        // Abre e fecha ao clicar no sininho
-        btnSininho.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownNotif.classList.toggle('active');
-        });
+        if (btnSininho && dropdownNotif) {
+            btnSininho.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownNotif.classList.toggle('active');
+            });
 
-        // Fecha se o usuário clicar em qualquer outro lugar da tela
-        document.addEventListener('click', (e) => {
-            if (!dropdownNotif.contains(e.target) && e.target !== btnSininho) {
-                dropdownNotif.classList.remove('active');
-            }
-        });
+            document.addEventListener('click', (e) => {
+                if (!dropdownNotif.contains(e.target) && e.target !== btnSininho) {
+                    dropdownNotif.classList.remove('active');
+                }
+            });
+        }
     });
 </script>

@@ -1,0 +1,422 @@
+/* ==========================================================================
+   ESTILOS DA PÁGINA DE MEUS PEDIDOS
+   ========================================================================== */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.pedidos-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.secao-pedidos {
+    margin-bottom: 50px;
+}
+
+.pedidos-title {
+    font-size: 24px;
+    border-bottom: 2px solid #22c55e;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    color: #22c55e;
+}
+
+.grid-pedidos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.card-pedido {
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #2d2d2d;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+.card-pedido:hover {
+    transform: translateY(-2px);
+}
+
+.pedido-detalhes h3 {
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.pedido-detalhes p {
+    margin: 5px 0;
+    color: #aaaaaa;
+    font-size: 14px;
+}
+
+.txt-data {
+    font-size: 12px !important;
+    color: #777777 !important;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status-badge.aprovado {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status-badge.pendente {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.status-badge.recusado {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+.txt-vazio {
+    color: #777;
+    font-style: italic;
+}
+
+.divisor-pedidos {
+    border: 0;
+    height: 1px;
+    background: #2d2d2d;
+    margin: 40px 0;
+}
+
+/* ==========================================================================
+   ESTILOS DA MODAL DE CHECKOUT (ESTILO MERCADO LIVRE)
+   ========================================================================== */
+.checkout-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.85); 
+    justify-content: center; 
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.checkout-content {
+    background: #1e1e1e; 
+    color: #fff; 
+    padding: 30px; 
+    border-radius: 14px; 
+    width: 90%; 
+    max-width: 480px; 
+    border: 1px solid #333; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer; 
+    font-size: 28px; 
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.fechar-modal:hover {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block; 
+    margin-bottom: 6px; 
+    font-size: 14px;
+    color: #ddd;
+}
+
+.form-control {
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 8px; 
+    border: 1px solid #444; 
+    background: #2d2d2d; 
+    color: #fff; 
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    border-color: #22c55e;
+    outline: none;
+}
+
+.row-dupla {
+    display: flex; 
+    gap: 15px;
+}
+
+.row-dupla .form-group {
+    flex: 1;
+}
+
+.box-pix {
+    display: none; 
+    text-align: center; 
+    background: rgba(34, 197, 94, 0.1); 
+    padding: 20px; 
+    border-radius: 10px; 
+    margin-bottom: 20px; 
+    border: 1px dashed #22c55e;
+}
+
+.btn-pagar {
+    width: 100%; 
+    padding: 14px; 
+    background: #22c55e; 
+    border: none; 
+    color: #fff; 
+    font-size: 16px; 
+    font-weight: bold; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: background 0.2s;
+}
+
+.btn-pagar:hover {
+    background: #16a34a;
+}
+
+/* ==========================================================================
+   MODIFICADORES PARA LIGHT MODE COESOS
+   ========================================================================== */
+body.light-mode {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+body.light-mode .card-pedido {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+body.light-mode .pedido-detalhes h3 {
+    color: #1f2937;
+}
+
+body.light-mode .pedido-detalhes p {
+    color: #4b5563;
+}
+
+body.light-mode .checkout-content {
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+}
+
+body.light-mode .form-control {
+    background: #f3f4f6;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+}
+
+body.light-mode .form-group label {
+    color: #4b5563;
+}
+
+/* ==========================================================================
+   CONTROLE DE TEMA DO HEADER (SISTEMA SOL E LUA)
+   ========================================================================== */
+
+/* Padrão: Modo Escuro (Dark Mode) */
+body, body.dark-mode {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+}
+
+/* Força o Header a ficar escuro no modo Dark */
+body:not(.light-mode) header, 
+body.dark-mode header,
+body:not(.light-mode) .header-wrapper,
+body.dark-mode .header-wrapper {
+    background-color: #1e1e1e !important;
+    border-bottom: 1px solid #2d2d2d !important;
+}
+
+/* Força os links do menu a ficarem brancos no modo Dark */
+body:not(.light-mode) header a,
+body.dark-mode header a {
+    color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   Modo Claro (Light Mode) 
+   -------------------------------------------------------------------------- */
+body.light-mode {
+    background-color: #f3f4f6 !important;
+    color: #1f2937 !important;
+}
+
+/* Força o Header a ficar branco no modo Light */
+body.light-mode header,
+body.light-mode .header-wrapper {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Força os links do menu a ficarem escuros no modo Light */
+body.light-mode header a {
+    color: #1f2937 !important;
+}
+
+/* Garante que o texto informativo de "vazio" se adapte aos temas */
+body.light-mode .txt-vazio {
+    color: #6b7280 !important;
+}
+body:not(.light-mode) .txt-vazio {
+    color: #9ca3af !important;
+}
+/* ==========================================================================
+   CHECKOUT EM ETAPAS (DENTRO DO CARRINHO LATERAL)
+   ========================================================================== */
+.checkout-passo {
+    display: none;
+    flex-direction: column;
+    padding: 15px;
+    height: calc(100% - 150px);
+    overflow-y: auto;
+}
+
+.checkout-passo.ativo {
+    display: flex;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-grupo label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #ddd;
+}
+
+.form-grupo input, 
+.form-grupo select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #2d2d2d;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-grupo input:focus {
+    border-color: #22c55e;
+    outline: none;
+}
+
+.form-grup-linha {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+}
+
+.carrinho-footer-botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding: 15px;
+    border-top: 1px solid #333;
+    background: #1a1a1a;
+}
+
+.btn-voltar {
+    background: #444;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex: 1;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-voltar:hover { 
+    background: #555; 
+}
+
+.opcoes-pagamento {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.opcao-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #252525;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.opcao-card input { 
+    width: auto; 
+    margin: 0; 
+}
+
+/* Ajustes de Cores para o Light Mode (Tema Claro) */
+body.light-mode .form-grupo label { 
+    color: #4b5563; 
+}
+
+body.light-mode .form-grupo input, 
+body.light-mode .form-grupo select {
+    background-color: #f3f4f6; 
+    color: #1f2937; 
+    border: 1px solid #d1d5db;
+}
+
+body.light-mode .opcao-card { 
+    background: #f9f9f9; 
+    border: 1px solid #ddd; 
+}
+
+body.light-mode .carrinho-footer-botoes { 
+    background: #f3f4f6; 
+}

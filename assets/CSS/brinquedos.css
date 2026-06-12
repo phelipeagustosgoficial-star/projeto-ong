@@ -1,0 +1,346 @@
+/* ==========================================================================
+   ESTILOS GERAIS E GERENCIAMENTO DE TEMAS (PADRÃO: DARK MODE)
+   ========================================================================== */
+
+/* Padrão Dark Mode */
+html, body {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-publica, header, .nav-container {
+    background-color: #1e1e1e !important;
+}
+
+.page-header-title h2 {
+    color: #ffffff !important;
+}
+
+.page-header-title p {
+    color: #a3a3a3 !important;
+}
+
+/* ==========================================================================
+   MODIFICADORES PARA LIGHT MODE COESOS (APLICADOS VIA SCRIPT)
+   ========================================================================== */
+body.light-mode {
+    background-color: #f3f4f6 !important;
+    color: #1f2937 !important;
+}
+
+body.light-mode .navbar-publica, 
+body.light-mode header, 
+body.light-mode .nav-container {
+    background-color: #ffffff !important;
+}
+
+body.light-mode .page-header-title h2 {
+    color: #1f2937 !important; /* Letras escuras no fundo claro */
+}
+
+body.light-mode .page-header-title p {
+    color: #4b5563 !important;
+}
+
+body.light-mode .card-item {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+body.light-mode .card-info h3 {
+    color: #1f2937 !important;
+}
+
+body.light-mode .txt-descricao {
+    color: #4b5563 !important;
+}
+
+body.light-mode .carrinho-sidebar {
+    background-color: #ffffff !important;
+    border-left: 1px solid #e5e7eb !important;
+    color: #1f2937 !important;
+}
+
+body.light-mode .carrinho-header, 
+body.light-mode .item-carrinho-linha {
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+body.light-mode .item-detalhes h4 {
+    color: #1f2937 !important;
+}
+
+/* ==========================================================================
+   CONTRASTE DAS LETRAS NO DROPDOWN DE NOTIFICAÇÕES
+   ========================================================================== */
+.notification-dropdown {
+    background-color: #1e1e1e !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.light-mode .notification-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.status-text, .notification-item, .dropdown-header span {
+    color: #e5e5e5 !important; 
+}
+
+.status-text strong {
+    color: #ffffff !important;
+}
+
+body.light-mode .status-text, 
+body.light-mode .notification-item, 
+body.light-mode .dropdown-header span {
+    color: #374151 !important;
+}
+
+body.light-mode .status-text strong {
+    color: #111827 !important;
+}
+
+/* ==========================================================================
+   CARRINHO LATERAL FLUTUANTE
+   ========================================================================== */
+.carrinho-sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 340px;
+    height: 100vh;
+    background-color: #1e1e1e;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease-in-out;
+}
+
+.carrinho-sidebar.open {
+    right: 0;
+}
+
+.carrinho-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carrinho-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.btn-fechar-carrinho {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.carrinho-itens {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    color: #a3a3a3;
+    margin-top: 40px;
+}
+
+.item-carrinho-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item-detalhes h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+    color: inherit;
+}
+
+.item-detalhes span {
+    font-size: 0.85rem;
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.btn-remover-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.carrinho-footer {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.total-box {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+#carrinhoTotal {
+    color: #22c55e;
+}
+
+.btn-finalizar-compra {
+    width: 100%;
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   GRID DE PRODUTOS
+   ========================================================================== */
+.main-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.page-header-title {
+    margin-bottom: 35px;
+}
+
+.page-header-title h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.card-item {
+    background-color: #1e1e1e;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: transform 0.2s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-4px);
+}
+
+.card-img-box {
+    width: 100%;
+    height: 220px;
+    background-color: #262626;
+    overflow: hidden;
+}
+
+.card-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.badge-categoria {
+    align-self: flex-start;
+    background-color: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.card-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.txt-descricao {
+    font-size: 0.9rem;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 42px;
+}
+
+.card-footer-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 16px;
+}
+
+.txt-preco {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #22c55e;
+}
+
+.txt-estoque {
+    font-size: 0.78rem;
+    color: #a3a3a3;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.btn-quero-conhecer {
+    width: 100%;
+    background-color: #22c55e;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-quero-conhecer:hover {
+    background-color: #16a34a;
+}
