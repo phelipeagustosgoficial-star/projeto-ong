@@ -1,0 +1,110 @@
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA A PÁGINA SOBRE A ONG
+   ========================================================================== */
+.sobre-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.banner-sobre {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.banner-sobre h1 {
+    margin: 0 0 10px 0;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.banner-sobre p {
+    margin: 0;
+    font-size: 18px;
+    color: #e2f8e9;
+}
+
+.secao-historia {
+    background: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.secao-historia h2 {
+    color: #22c55e;
+    margin-top: 0;
+    border-bottom: 1px solid #2d2d2d;
+    padding-bottom: 10px;
+}
+
+.secao-historia p {
+    color: #aaaaaa;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.grid-pilares {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card-pilar {
+    background: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+.card-pilar:hover {
+    transform: translateY(-5px);
+}
+
+.icone-pilar {
+    font-size: 40px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.card-pilar h3 {
+    color: #22c55e;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.card-pilar p {
+    color: #aaaaaa;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ==========================================================================
+   MODIFICADORES PARA LIGHT MODE COESOS
+   ========================================================================== */
+body.light-mode .secao-historia,
+body.light-mode .card-pilar {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+body.light-mode .secao-historia p,
+body.light-mode .card-pilar p {
+    color: #4b5563;
+}
+
+body.light-mode .secao-historia h2,
+body.light-mode .card-pilar h3 {
+    color: #16a34a;
+}

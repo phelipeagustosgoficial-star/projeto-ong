@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Se não estiver logado, redireciona para o login
 if (!isset($_SESSION['logado'])) {
     header("Location: login.php");
     exit();
@@ -10,72 +11,36 @@ if (!isset($_SESSION['logado'])) {
 
 require_once 'backend/conexao.php';
 
-// Pega o ID do usuário logado na sessão
-$id_usuario = $_SESSION['id'] ?? 1; 
+// Captura o ID do utilizador logado na sessão para filtrar os dados
+$id_usuario = $_SESSION['id_usuario'] ?? null;
 
-// --- PROCESSAR NOVA COMPRA VINDA DA MODAL ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['finalizar_compra'])) {
-    $id_produto = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
-    $metodo_pagamento = filter_input(INPUT_POST, 'metodo_pagamento', FILTER_DEFAULT);
-    $nome_titular = filter_input(INPUT_POST, 'nome_titular', FILTER_DEFAULT);
+$compras = [];
+$adocoes = [];
 
-    if ($id_produto) {
-        try {
-            // Insere o pedido na tabela de compras da lojinha
-            $sql_inserir = "INSERT INTO tb_pedidos_loja (id_usuario, id_produto, metodo_pagamento, nome_titular, status_pedido, data_pedido) 
-                            VALUES (:id_usuario, :id_produto, :metodo_pagamento, :nome_titular, 'pendente', NOW())";
-            
-            $stmt_ins = $conexao->prepare($sql_inserir);
-            $stmt_ins->execute([
-                ':id_usuario' => $id_usuario,
-                ':id_produto' => $id_produto,
-                ':metodo_pagamento' => $metodo_pagamento,
-                ':nome_titular' => $nome_titular
-            ]);
+if ($id_usuario) {
+    try {
+        // 1. QUERY: Procura as compras da Lojinha deste utilizador específico
+        $sql_compras = "SELECT p.nome, p.preco, ped.data_pedido, ped.status 
+                        FROM tb_pedidos ped
+                        JOIN tb_produtos p ON ped.id_produto = p.id
+                        WHERE ped.id_usuario = :id_usuario
+                        ORDER BY ped.id DESC";
+        $stmt_c = $conexao->prepare($sql_compras);
+        $stmt_c->execute(['id_usuario' => $id_usuario]);
+        $compras = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
-            // Diminui 1 unidade do estoque do produto comprado
-            $sql_estoque = "UPDATE tb_produtos SET estoque = estoque - 1 WHERE id = :id_produto AND estoque > 0";
-            $stmt_est = $conexao->prepare($sql_estoque);
-            $stmt_est->execute([':id_produto' => $id_produto]);
+        // 2. QUERY: Procura os pedidos de Adoção deste utilizador específico
+        $sql_adocoes = "SELECT nome_pet, raca_especie, data_solicitacao, status 
+                        FROM tb_adocoes 
+                        WHERE id_usuario = :id_usuario 
+                        ORDER BY id DESC";
+        $stmt_a = $conexao->prepare($sql_adocoes);
+        $stmt_a->execute(['id_usuario' => $id_usuario]);
+        $adocoes = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
 
-            // Redireciona para limpar o POST e atualizar a lista
-            header("Location: meus-pedidos.php");
-            exit();
-
-        } catch (PDOException $e) {
-            error_log("Erro ao salvar pedido: " . $e->getMessage());
-        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
     }
-}
-
-// --- BUSCAR HISTÓRICO DE COMPRAS DA LOJINHA ---
-try {
-    $sql_compras = "SELECT p.*, prod.nome AS nome_produto, prod.preco, prod.imagem 
-                    FROM tb_pedidos_loja p 
-                    JOIN tb_produtos prod ON p.id_produto = prod.id 
-                    WHERE p.id_usuario = :id_usuario 
-                    ORDER BY p.id DESC";
-    $stmt_compras = $conexao->prepare($sql_compras);
-    $stmt_compras->execute([':id_usuario' => $id_usuario]);
-    $compras_loja = $stmt_compras->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    error_log($e->getMessage());
-    $compras_loja = [];
-}
-
-// --- BUSCAR HISTÓRICO DE ADOÇÕES ---
-try {
-    $sql_adocoes = "SELECT pa.*, a.nome AS nome_animal, a.especie 
-                    FROM tb_pedidos_adocao pa
-                    JOIN tb_animais a ON pa.id_animal = a.id
-                    WHERE pa.id_usuario = :id_usuario
-                    ORDER BY pa.id DESC";
-    $stmt_adocoes = $conexao->prepare($sql_adocoes);
-    $stmt_adocoes->execute([':id_usuario' => $id_usuario]); 
-    $pedidos_adocao = $stmt_adocoes->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    error_log($e->getMessage());
-    $pedidos_adocao = [];
 }
 ?>
 <!DOCTYPE html>
@@ -91,93 +56,84 @@ try {
 
     <?php include_once 'includes/header-publico.php'; ?>
 
-    <div class="pedidos-container">
+    <main class="main-wrapper" style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
         
-        <section class="secao-pedidos">
-            <h2 class="pedidos-title">🛍️ Minhas Compras na Lojinha</h2>
-            <div class="grid-pedidos">
-                <?php if (empty($compras_loja)): ?>
-                    <p class="txt-vazio">Você ainda não comprou nenhum produto... 🛒</p>
+        <section style="margin-bottom: 50px;">
+            <div class="page-header-title" style="margin-bottom: 20px; border-bottom: 2px solid #22c55e; padding-bottom: 10px;">
+                <h2 style="font-size: 24px; color: #fff; display: flex; align-items: center; gap: 10px;">🛍️ Minhas Compras na Lojinha</h2>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <?php if (empty($compras)): ?>
+                    <p class="carrinho-vazio" style="color: #aaaaaa; font-style: italic;">Você ainda não comprou nenhum produto... 🛒</p>
                 <?php else: ?>
-                    <?php foreach ($compras_loja as $compra): ?>
-                        <div class="card-pedido">
+                    <?php foreach ($compras as $compra): ?>
+                        <div class="card-pedido" style="background: #1e1e1e; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333;">
                             <div class="pedido-info">
                                 <div class="pedido-detalhes">
-                                    <h3><?php echo htmlspecialchars($compra['nome_produto']); ?></h3>
-                                    <p><strong>Valor:</strong> R$ <?php echo number_format($compra['preco'], 2, ',', '.'); ?></p>
-                                    <p><strong>Forma de Pagamento:</strong> <?php echo htmlspecialchars($compra['metodo_pagamento']); ?></p>
-                                    <p class="txt-data">Comprado em: <?php echo date('d/m/Y H:i', strtotime($compra['data_pedido'])); ?></p>
+                                    <h3><?php echo htmlspecialchars($compra['nome']); ?></h3>
+                                    <p>Data da Compra: <?php echo date('d/m/Y H:i', strtotime($compra['data_pedido'])); ?></p>
+                                    <p style="font-weight: bold; color: #22c55e;">Valor: R$ <?php echo number_format($compra['preco'], 2, ',', '.'); ?></p>
                                 </div>
                             </div>
-                            <div class="pedido-status">
-                                <span class="status-badge <?php echo strtolower($compra['status_pedido']); ?>">
-                                    <?php echo htmlspecialchars($compra['status_pedido']); ?>
-                                </span>
-                            </div>
+                            
+                            <?php 
+                                $status_compra = strtolower($compra['status']);
+                                $classe_c = 'pendente';
+                                if (strpos($status_compra, 'aprov') !== false || strpos($status_compra, 'concl') !== false) $classe_c = 'aprovado';
+                                if (strpos($status_compra, 'recus') !== false || strpos($status_compra, 'cancel') !== false) $classe_c = 'recusado';
+                            ?>
+                            <span class="status-badge <?php echo $classe_c; ?>">
+                                <?php echo htmlspecialchars($compra['status']); ?>
+                            </span>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </section>
 
-        <hr class="divisor-pedidos">
+        <section>
+            <div class="page-header-title" style="margin-bottom: 20px; border-bottom: 2px solid #22c55e; padding-bottom: 10px;">
+                <h2 style="font-size: 24px; color: #fff; display: flex; align-items: center; gap: 10px;">🐾 Meus Pedidos de Adoção</h2>
+            </div>
 
-        <section class="secao-pedidos">
-            <h2 class="pedidos-title">🐾 Meus Pedidos de Adoção</h2>
-            <div class="grid-pedidos">
-                <?php if (empty($pedidos_adocao)): ?>
-                    <p class="txt-vazio">Você não possui nenhuma solicitação de adoção enviada.</p>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <?php if (empty($adocoes)): ?>
+                    <p class="carrinho-vazio" style="color: #aaaaaa; font-style: italic;">Você não possui nenhuma solicitação de adoção enviada. 🐶</p>
                 <?php else: ?>
-                    <?php foreach ($pedidos_adocao as $adocao): ?>
-                        <div class="card-pedido">
+                    <?php foreach ($adocoes as $adocao): ?>
+                        <div class="card-pedido" style="background: #1e1e1e; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333;">
                             <div class="pedido-info">
                                 <div class="pedido-detalhes">
-                                    <h3>Solicitação para: <?php echo htmlspecialchars($adocao['nome_animal']); ?></h3>
-                                    <p><strong>Raça/Espécie:</strong> <?php echo htmlspecialchars($adocao['especie']); ?></p>
-                                    <p class="txt-data">Solicitado em: <?php echo date('d/m/Y H:i', strtotime($adocao['data_pedido'])); ?></p>
+                                    <h3>Solicitação para: <?php echo htmlspecialchars($adocao['nome_pet']); ?></h3>
+                                    <p>Raça / Espécie: <?php echo htmlspecialchars($adocao['raca_especie']); ?></p>
+                                    <p>Data do Pedido: <?php echo date('d/m/Y H:i', strtotime($adocao['data_solicitacao'])); ?></p>
                                 </div>
                             </div>
-                            <div class="pedido-status">
-                                <span class="status-badge <?php echo strtolower($adocao['status_pedido']); ?>">
-                                    <?php echo htmlspecialchars($adocao['status_pedido']); ?>
-                                </span>
-                            </div>
+                            
+                            <?php 
+                                $status_adocao = strtolower($adocao['status']);
+                                $classe_a = 'pendente';
+                                if (strpos($status_adocao, 'aprov') !== false || strpos($status_adocao, 'aceit') !== false) $classe_a = 'aprovado';
+                                if (strpos($status_adocao, 'recus') !== false || strpos($status_adocao, 'rejeit') !== false) $classe_a = 'recusado';
+                            ?>
+                            <span class="status-badge <?php echo $classe_a; ?>">
+                                <?php echo htmlspecialchars($adocao['status']); ?>
+                            </span>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </section>
 
-    </div>
+    </main>
 
     <script>
+        // Mantém a aplicação do tema ativo (claro/escuro) se aplicável
         document.addEventListener('DOMContentLoaded', () => {
-            const btnTheme = document.getElementById('theme-toggle');
-            
-            function aplicarTema(tema) {
-                if (tema === 'light') {
-                    document.body.classList.add('light-mode');
-                    document.body.classList.remove('dark-mode');
-                    if (btnTheme) btnTheme.innerText = '🌙'; 
-                } else {
-                    document.body.classList.remove('light-mode');
-                    document.body.classList.add('dark-mode');
-                    if (btnTheme) btnTheme.innerText = '☀️'; 
-                }
-            }
-
-            // Pega a escolha anterior do usuário no navegador
             const temaSalvo = localStorage.getItem('tema') || 'dark';
-            aplicarTema(temaSalvo);
-
-            // Torna o botão funcional caso ele exista no header carregado
-            if (btnTheme) {
-                btnTheme.onclick = function(e) {
-                    e.preventDefault();
-                    const novoTema = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-                    localStorage.setItem('tema', novoTema);
-                    aplicarTema(novoTema);
-                };
+            if (temaSalvo === 'light') {
+                document.body.classList.add('light-mode');
             }
         });
     </script>

@@ -299,6 +299,7 @@ body.light-mode .txt-vazio {
 body:not(.light-mode) .txt-vazio {
     color: #9ca3af !important;
 }
+
 /* ==========================================================================
    CHECKOUT EM ETAPAS (DENTRO DO CARRINHO LATERAL)
    ========================================================================== */
